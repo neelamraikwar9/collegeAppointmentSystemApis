@@ -36,7 +36,6 @@ const avalabilitySchema = new mongoose.Schema({
     timestamps: true
 });
 
-
 const availability = mongoose.model("availability", avalabilitySchema); 
 
-module.export = avalilability; 
+module.export = availability; 
