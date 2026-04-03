@@ -5,6 +5,7 @@ const cors = require("cors");
 const dotenv = require("dotenv"); 
 const { initializeDB } = require("./db/db.connect"); 
 const app = express();
+const authRoute = require("./routes/authRoute"); 
 
 app.use(cors({origin: "*", credentials: true})); 
 app.use(express.json()); 

@@ -43,10 +43,11 @@ router.post("/auth/signin", async(req, res) => {
        res.status(401).json({ error: "Invalid credentials", success: false });
      }
 
-      const token = jwt.sign({ userId: user._id, email: user.email }, SECRET, {
+      const token = jwt.sign({ email: user.email, role: user.role }, SECRET, {
         expiresIn: "24h",
       });
       res.status({ token });
 });
 
 
+module.exports = router; 
