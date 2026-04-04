@@ -14,6 +14,8 @@ dotenv.config();
 
 initializeDB();
 
+app.use('/', authRoute); 
+
 
 const PORT = 5000; 
 app.listen(PORT, () => {

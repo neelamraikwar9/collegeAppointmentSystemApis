@@ -3,11 +3,12 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 const verifyJWT = require("./authentication");
 const casUser = require("../models/Users.model");
+const bcrypt = require("bcrypt"); 
 
 router.post("/auth/signup", async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
-    cosnole.log(req.body, "Recived"); 
+    console.log(req.body, "Recived"); 
 
     const existingUser = await casUser.findOne({ email });
 
@@ -30,7 +31,8 @@ router.post("/auth/signup", async (req, res) => {
 });
 
 router.post("/auth/signin", async(req, res) => {
-    const {email, password, role} = req.body; 
+  try{
+    const {email, password} = req.body; 
     
     const user = await casUser.findOne({ email });
 
@@ -43,10 +45,18 @@ router.post("/auth/signin", async(req, res) => {
        res.status(401).json({ error: "Invalid credentials", success: false });
      }
 
-      const token = jwt.sign({ email: user.email, role: user.role }, SECRET, {
-        expiresIn: "24h",
-      });
-      res.status({ token });
+      const token = jwt.sign(
+        { email: user.email, role: user.role },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "24h",
+        },
+      );
+      res.status(200).json({token, success: true, user: {email: user.email, role: user.role }});
+    } catch(error){
+      console.error("Signin error: ", error); 
+      res.status(500).json({error: "Server error", success: false}); 
+    }
 });
 
 
