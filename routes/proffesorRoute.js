@@ -43,20 +43,17 @@ router.post("/appointment/slots", VerifyAuth, async(req, res) => {
 
 // api to get slots; 
 
-router.get("/appointment/slots", async(req, res) => {
+router.get("/appointment/slots", VerifyAuth, async(req, res) => {
     try {
-      const slot = new Appointment(req.body);
-      console.log(slot, "slot");
-
-      await slot.save();
-      console.log(slot, "slot");
+      const slots = await Appointment.find({ professorId: req.user._id });
+      console.log(slots, "slot");
 
       res
-        .status(201)
-        .json({ message: "Slot added successfully.", newSlot: slot });
+        .status(200)
+        .json(slots);
     } catch (error) {
       console.log(error, "error");
-      res.status(500).json({ error: "Failed to add Slot." });
+      res.status(500).json({ message: "Failed to fetch Slots", error: error });
     }
 
 })
