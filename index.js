@@ -6,7 +6,7 @@ const dotenv = require("dotenv");
 const { initializeDB } = require("./db/db.connect"); 
 const app = express();
 const authRoute = require("./routes/authRoute"); 
-const professorRoute = require("./routes/proffesorRoute"); 
+const professorRoute = require("./routes/profesorRoute"); 
 
 app.use(cors({origin: "*", credentials: true})); 
 app.use(express.json()); 
