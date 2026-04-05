@@ -9,7 +9,6 @@ const appointmentSchema = new mongoose.Schema({
   studentId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "casUser",
-    
   },
 
   time: {
