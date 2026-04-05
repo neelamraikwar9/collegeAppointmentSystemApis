@@ -6,6 +6,7 @@ const dotenv = require("dotenv");
 const { initializeDB } = require("./db/db.connect"); 
 const app = express();
 const authRoute = require("./routes/authRoute"); 
+const professorRoute = require("./routes/proffesorRoute"); 
 
 app.use(cors({origin: "*", credentials: true})); 
 app.use(express.json()); 
@@ -15,6 +16,7 @@ dotenv.config();
 initializeDB();
 
 app.use('/', authRoute); 
+app.use('/', professorRoute); 
 
 
 const PORT = 5000; 

@@ -3,24 +3,24 @@ const mongoose = require("mongoose");
 const appointmentSchema = new mongoose.Schema({
   professorId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: casUser,
-    required: true,
+    ref: "casUser",
   },
 
   studentId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: casUser,
-    required: true,
+    ref: "casUser",
+    
   },
 
   time: {
     type: Date,
     required: true,
+    default: Date.now
   },
 
   status: {
     type: String,
-    enum: ["booked", "cancelled", "completed"],
+    enum: ["booked", "cancelled", "Free"],
     default: "booked",
   },
 }, 
