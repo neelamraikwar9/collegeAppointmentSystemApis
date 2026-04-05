@@ -9,8 +9,9 @@ const verifyJWT = (req, res, next) => {
     }
 
     try{
-        console.log(token); 
-        const decodeToken = jwt.verify(token, SECRET); 
+        console.log(token, "token"); 
+        const decodeToken = jwt.verify(token, process.env.JWT_SECRET); 
+        console.log(decodeToken, "decodeToken"); 
         req.user = decodeToken; 
         next(); 
     } catch(error){

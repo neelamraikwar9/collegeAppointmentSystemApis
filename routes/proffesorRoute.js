@@ -8,13 +8,20 @@ const  casUser  = require("../models/Users.model");
 //api to post slots; 
 
 router.post("/appointment/slots", VerifyAuth, async(req, res) => {
-    const { professorId } = req.params;
+    //  console.log("req.params:", req.params); 
+     console.log("req.body:", req.body);  
 
-    const professor = await casUser.findOne({ _id: professorId, role: "Professor" })
-      .select("_id");
+    const { professorId } = req.body;
+     console.log("professorId:", professorId);
+
+
+    const professor = await casUser.findOne({ _id: professorId, role: "Professor" }); 
+
+      console.log(professor, "professor"); 
+
 
     if (!professor) {
-      return res.status(404).send("Professor not found or not authorized");
+      return res.status(404).send({error: "Professor not found or not authorized"});
     }
     
     try{
@@ -31,7 +38,30 @@ router.post("/appointment/slots", VerifyAuth, async(req, res) => {
         res.status(500).json({ error: "Failed to add Slot." }); 
     }
 
+}); 
+
+
+// api to get slots; 
+
+router.get("/appointment/slots", async(req, res) => {
+    try {
+      const slot = new Appointment(req.body);
+      console.log(slot, "slot");
+
+      await slot.save();
+      console.log(slot, "slot");
+
+      res
+        .status(201)
+        .json({ message: "Slot added successfully.", newSlot: slot });
+    } catch (error) {
+      console.log(error, "error");
+      res.status(500).json({ error: "Failed to add Slot." });
+    }
+
 })
+
+
 
 module.exports = router; 
 
